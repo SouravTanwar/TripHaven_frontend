@@ -1,11 +1,14 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import "./Categories.css"
+import { useCategory } from "../../Context"
 
 export const Categories = () => {
 
     const [categories, setCategories] = useState([])
     const [categoryToShow, setCategoryToShow] = useState(0)
+
+    const {hotelCategory, setHotelCategory} = useCategory()
 
     const handleRightButtonClick = () => {
         setCategoryToShow(prev => prev + 10)
@@ -14,6 +17,14 @@ export const Categories = () => {
     const handleLeftButtonClick = () => {
         setCategoryToShow(prev => prev - 10)
     }
+
+    const handleCategoryClick = (category) => {
+        console.log({category});
+        setHotelCategory(category)
+
+    }
+
+    console.log(hotelCategory);
 
     useEffect(() => {
         (async ()=> {
@@ -42,7 +53,7 @@ export const Categories = () => {
                 )
             }
             {
-                categories && categories.map(({_id, category}) => (<span key={_id}> {category} </span>))
+                categories && categories.map(({_id, category}) => (<span className={`${category === hotelCategory ? "border-bottom" : ""}`} key={_id} onClick={() => handleCategoryClick(category)}> {category} </span>))
             }
             {
                 categoryToShow - 10 < categories.length && (

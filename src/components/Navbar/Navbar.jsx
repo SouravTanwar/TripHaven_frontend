@@ -1,6 +1,17 @@
 import "./Navbar.css"
+import { useDate } from "../../Context"
 
 export const Navbar = () => {
+
+    const {dateDispatch} = useDate()
+
+    const handleSearchClick = () => {
+        dateDispatch({
+            type: "OPEN_SEARCH_MODAL"
+        })
+    }
+
+
     return (
         <header className="heading d-flex align-center">
             <h1 className="heading-1">
@@ -8,7 +19,7 @@ export const Navbar = () => {
                     TripHaven
                 </a>
             </h1>
-            <div className="form-container d-flex align-center cursor-pointer shadow"> 
+            <div className="form-container d-flex align-center cursor-pointer shadow" onClick={handleSearchClick}> 
                 <span className="form-option"> Any Where</span>
 
                 <span className="border-right-1px"></span>

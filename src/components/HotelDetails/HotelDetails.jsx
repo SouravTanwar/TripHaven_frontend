@@ -1,4 +1,4 @@
-
+import "./HotelDetails.css"
 
 export const HotelDetails = ({singleHotel}) => {
 
@@ -10,7 +10,7 @@ export const HotelDetails = ({singleHotel}) => {
         <div className="hotel-details-container">
             <div className="host-details">
                 <p className="host-name p">Hosted by {hostName}, Joined on {hostJoinedOn} </p>
-                <span className="span">{numberOfguest} guest. {numberOfBedrooms} bedroom. {numberOfBeds} bed. {numberOfBathrooms} bathroom</span>
+                <div className="span hotel-room-details">{numberOfguest} guests. {numberOfBedrooms} bedrooms. {numberOfBeds} beds. {numberOfBathrooms} bathrooms</div>
             </div>
 
             {/* //TODO: below functionalities to fuction from the api */}
@@ -18,7 +18,7 @@ export const HotelDetails = ({singleHotel}) => {
             <div className="key-feature host-details">
                 <div className="gutter-bottom-small">
                     <p className="p d-flex align-center gap">
-                        <span class="apps material-icons-outlined">apps</span>Dedicated
+                        <span class="apps material-symbols-outlined">apps</span>Dedicated
                         Workspace
                     </p>
                     <span className="span">
@@ -27,14 +27,14 @@ export const HotelDetails = ({singleHotel}) => {
                 </div>
                 <div className="gutter-bottom-small">
                     <p className="p d-flex align-center gap">
-                        <span class="apps material-icons-outlined">apps</span>Great Location
+                        <span class="apps material-symbols-outlined">apps</span>Great Location
                     </p>
                     <span className="span">
                         80% of recent guests gave the location a 5-star rating
                     </span>
                 </div>
                 <p className="p d-flex align-center gap">
-                    <span class="apps material-icons-outlined">apps</span>Free
+                    <span class="apps material-symbols-outlined">apps</span>Free
                     cancellation before 7 days of booking
                 </p>
             </div>
@@ -43,27 +43,27 @@ export const HotelDetails = ({singleHotel}) => {
                 <div className="d-flex gap-xxl">
                     <div className="d-flex direction-column">
                         <span className="span d-flex align-center gap">
-                            <span class="apps material-icons-outlined">apps</span>Kitchen
+                            <span class="apps material-symbols-outlined">apps</span>Kitchen
                         </span>
                         <span className="span d-flex align-center gap">
-                            <span class="apps material-icons-outlined">apps</span>Free parking
+                            <span class="apps material-symbols-outlined">apps</span>Free parking
                             on premises
                         </span>
                         <span className="span d-flex align-center gap">
-                            <span class="apps material-icons-outlined">apps</span>Dedicated
+                            <span class="apps material-symbols-outlined">apps</span>Dedicated
                             Workspace
                         </span>
                     </div>
                     <div className="d-flex direction-column">
                         <span className="span d-flex align-center gap">
-                            <span class="apps material-icons-outlined">apps</span>Wifi
+                            <span class="apps material-symbols-outlined">apps</span>Wifi
                         </span>
                         <span className="span d-flex align-center gap">
-                            <span class="apps material-icons-outlined">apps</span>Washing
+                            <span class="apps material-symbols-outlined">apps</span>Washing
                             Machine
                         </span>
                         <span className="span d-flex align-center gap">
-                            <span class="apps material-icons-outlined">apps</span>Patio or
+                            <span class="apps material-symbols-outlined">apps</span>Patio or
                             Balcony
                         </span>
                     </div>

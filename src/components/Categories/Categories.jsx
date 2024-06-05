@@ -24,8 +24,6 @@ export const Categories = () => {
 
     }
 
-    console.log(hotelCategory);
-
     useEffect(() => {
         (async ()=> {
             try {

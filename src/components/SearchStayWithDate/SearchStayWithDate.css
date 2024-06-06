@@ -45,3 +45,20 @@
 .search {
     background-color: var(--primary-color);
 }
+
+.search-result-container{
+    background-color: var(--background-color);
+    color: var(--text-color-primary);
+    width: 25rem;
+    max-height: 50vh;
+    overflow-y: auto;
+    border-radius: 4px;
+    top: 8rem;
+    left: 23.20%;
+}
+
+.p {
+    padding: 8px;
+    color: var(--text-color-primary);
+    opacity: 0.7;
+}

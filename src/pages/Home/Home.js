@@ -1,6 +1,6 @@
 import { Navbar, HotelCard, Categories, SearchStaywithDate } from "../../components"
 import axios from "axios"
-import { Fragment, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import "./Home.css"
 import { useCategory, useDate } from "../../Context"

@@ -1,8 +1,8 @@
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateSelector.css"
-import { useState } from "react"
 import { useDate } from "../../Context";
+
 
 
 export const DateSelector = ({checkInType}) => {
@@ -17,10 +17,17 @@ export const DateSelector = ({checkInType}) => {
         });
     }
 
+    const handleDateFocus = () => {
+        dateDispatch({
+            type: "DATE_FOCUS"
+        })
+    }
+
     return (
         <DatePicker className="search-dest input" 
         selected={checkInType === "in" ? checkInDate : checkOutDate} 
         onChange={date => handleDateChange(date)}
+        onFocus={handleDateFocus}
         dateFormat= "dd/MM/yyyy" 
         placeholderText="Add dates" 
         inDate={new Date()}

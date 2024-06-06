@@ -16,6 +16,32 @@ export const dateReducer = (state, {type, payload}) => {
                 ...state,
                 checkOutDate: payload
             }
+        case "DESTINATION":
+            return {
+                ...state,
+                destination: payload
+            }
+        case "GUESTS": 
+            return{
+                ...state,
+                guests: payload
+            }
+        case "DATE_FOCUS":
+            return{
+                ...state,
+                isSearchResultOpen: false
+            }
+        case "SHOW_SEARCH_RESULT":
+            return{
+                ...state,
+                isSearchResultOpen: true
+            }
+        case "CLOSE_SEARCH_MODAL":
+            return {
+                ...state,
+                isSearchModalOpen : !state.isSearchModalOpen
+            }
+
         default: return state
     }
 

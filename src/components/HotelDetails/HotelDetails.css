@@ -5,6 +5,7 @@
 .host-details .p {
     color: var(--text-color-primary);
     font-size: 1rem;
+    padding-left: 0;
 }
 
 .span {
@@ -45,6 +46,10 @@
 .amenities {
     padding-bottom: 1rem;
     padding-top: 1.5rem;
+}
+
+.amenities-container{
+    padding: 1.5rem 0;
 }
 
 .amenities-container .span {

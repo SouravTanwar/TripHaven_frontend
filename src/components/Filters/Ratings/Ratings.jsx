@@ -1,7 +1,17 @@
+import { useFilter } from "../../../Context"
 
 const ratings = ["1", "2", "3", "4", "5"]
 
 export const Ratings = () => {
+
+    const {tripHavenRating, filterDispatch} = useFilter()
+
+    const handleRatingsClick = (rating) => {
+        filterDispatch({
+            type: "RATING",
+            payload: rating
+        })
+    }
 
     return(
         <div className="filter-container" >
@@ -9,7 +19,7 @@ export const Ratings = () => {
             <div className="d-flex align-center gap-large">
                 {
                     ratings.map((rating) => (
-                        <span className="span-label aminity-count star d-flex align-center justify-center cursor-pointer on-hover " key={rating} >{rating} &up</span>) )
+                        <span className="span-label aminity-count star d-flex align-center justify-center cursor-pointer on-hover" onClick={() => handleRatingsClick(rating) } key={rating} >{rating} &up</span>) )
                 }
             </div>
         </div>

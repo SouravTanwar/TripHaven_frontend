@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import "./Home.css"
 import { useCategory, useDate, useFilter } from "../../Context"
-import { getHotelsByPrice } from "../../Utils"
+import { getHotelsByCancelation, getHotelsByPrice, getHotelsByPropertyType, getHotelsByRatings, getHotelsByRoomsAndBeds } from "../../Utils"
 
 
 export const Home = () => {
@@ -16,7 +16,7 @@ export const Home = () => {
 
     const {isSearchModalOpen} = useDate()
 
-    const {isFilterModalOpen, priceRange, noOfBedrooms, noOfBathrooms, noOfBeds} = useFilter()
+    const {isFilterModalOpen, priceRange,  noOfBedrooms, noOfBeds, noOfBathrooms, propertyType, tripHavenRating, isCancelable} = useFilter()
 
     const { hotelCategory } = useCategory()
 
@@ -52,6 +52,13 @@ export const Home = () => {
 
 
     const filteredHotelsByPrice = getHotelsByPrice(hotels, priceRange)
+    const filteredHotelsByRoomsAndBeds = getHotelsByRoomsAndBeds (filteredHotelsByPrice, noOfBedrooms, noOfBeds, noOfBathrooms)
+
+    const filteredHotelsByPropertyType = getHotelsByPropertyType(filteredHotelsByRoomsAndBeds, propertyType)
+
+    const filteredHotelsByRatings = getHotelsByRatings(filteredHotelsByPropertyType, tripHavenRating)
+
+    const filteredHotelsByCancelation = getHotelsByCancelation(filteredHotelsByRatings, isCancelable)
 
 
     return (
@@ -69,7 +76,7 @@ export const Home = () => {
                     >
                         <main className="main d-flex align-center wrap gap-larger">
                             {
-                                filteredHotelsByPrice && filteredHotelsByPrice.map((hotel) => (<HotelCard key={hotel._id} hotel={hotel} />))
+                                filteredHotelsByCancelation && filteredHotelsByCancelation.map((hotel) => (<HotelCard key={hotel._id} hotel={hotel} />))
                             }
                         </main>
                     </InfiniteScroll>

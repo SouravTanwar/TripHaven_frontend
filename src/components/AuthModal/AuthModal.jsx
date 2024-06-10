@@ -18,8 +18,6 @@ export const AuthModal = () => {
         authDispatch({
             type: "SET_TO_SIGNUP"
         })
-
-        console.log(selectedTab);
     }
 
     const handleCloseClick =() => {

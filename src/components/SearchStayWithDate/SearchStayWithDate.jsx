@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 export const SearchStaywithDate = () => {
 
     const [hotels, setHotels] = useState([])
+    const [isVisible, setIsVisible] = useState(true);
     const { destination, guests, dateDispatch, isSearchResultOpen } = useDate()
     const { hotelCategory } = useCategory()
 
@@ -27,6 +28,7 @@ export const SearchStaywithDate = () => {
     },[hotelCategory])
 
     const handleDestinationChange = (event) => {
+        setIsVisible(true)
         dateDispatch({
             type: "DESTINATION",
             payload: event.target.value
@@ -46,6 +48,7 @@ export const SearchStaywithDate = () => {
             type: "DESTINATION",
             payload: address
         })
+        setIsVisible(false);
     }
 
 
@@ -54,6 +57,7 @@ export const SearchStaywithDate = () => {
             type: "SHOW_SEARCH_RESULT"
         })
     }
+
 
 
     const handleSearchButtonClick = () => {
@@ -66,6 +70,7 @@ export const SearchStaywithDate = () => {
     }
 
 
+
     const destinationOptions = hotels.filter(
         ({address, city, state, country}) => 
             address.toLowerCase().includes(destination.toLowerCase()) || 
@@ -74,8 +79,14 @@ export const SearchStaywithDate = () => {
             country.toLowerCase().includes(destination.toLowerCase())
         )
 
+    const uniqueDestinationOptions = Array.from(new Set(destinationOptions.map(({ address, city }) => `${address},${city}`))).map(combination => {
+        const [address, city] = combination.split(",");
+        return { address, city };
+    })
+
+
     return (
-        <div className="destination-container">
+        <div className="destination-container" >
             <div className="destination-options d-flex align-center absolute">
                 <div className="location-container">
                     <label className="label">Where</label>
@@ -112,7 +123,7 @@ export const SearchStaywithDate = () => {
                 isSearchResultOpen && (
                     <div className="search-result-container absolute" >
                         {
-                            destinationOptions && destinationOptions.map(({ address, city }) => (
+                            uniqueDestinationOptions && isVisible && uniqueDestinationOptions.map(({ address, city }) => (
                                 <p className="p cursor-pointer" onClick={() => handleSearchResultClick(address)} >
                                     {address},{city}
                                 </p>

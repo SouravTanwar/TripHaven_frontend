@@ -30,7 +30,10 @@ export const DateSelector = ({checkInType}) => {
         onFocus={handleDateFocus}
         dateFormat= "dd/MM/yyyy" 
         placeholderText="Add dates" 
-        inDate={new Date()}
+        minDate={
+            checkInType === "out" && checkInDate ? 
+            new Date(checkInDate.getTime() + 24 * 60 * 60 * 1000) : new Date()
+        }
         closeOnScroll={true} />
     )
 

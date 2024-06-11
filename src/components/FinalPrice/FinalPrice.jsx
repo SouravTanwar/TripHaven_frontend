@@ -1,13 +1,18 @@
 import "./FinalPrice.css"
 import {useDate} from "../../Context"
 import { DateSelector } from "../DateSelector/DateSelector";
+import { useNavigate } from "react-router-dom";
 
 
 export const FinalPrice  = ({singleHotel}) => {
 
-    const {price, rating} = singleHotel;
+    const {_id, price, rating } = singleHotel;
 
-    const {guests, dateDispatch} = useDate()
+    const navigate = useNavigate()
+
+    const {guests, checkInDate, checkOutDate, dateDispatch} = useDate()
+
+    const numberOfNights = checkInDate && checkOutDate ? (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 3600 * 24): 0 
 
     const handleGuestChange = (event) => {
 
@@ -16,6 +21,10 @@ export const FinalPrice  = ({singleHotel}) => {
             payload: event.target.value
         })
 
+    }
+
+    const handleReserveClick = () => {
+        navigate(`/confirm-booking/stay/${_id}`)
     }
 
     return (
@@ -44,19 +53,23 @@ export const FinalPrice  = ({singleHotel}) => {
                 </div>
                 <div className="guests gutter-sm">
                     <p>GUESTS</p>
-                    {
-                        guests <=0 ? (<input className="guest-count-input" type="number" placeholder="Add Guests" value={guests} onChange={handleGuestChange} /> ) : <span>{guests} guests</span>
-                    }
+                    <input className="guest-count-input" type="number" placeholder="Add Guests" value={guests} onChange={handleGuestChange} /> 
                 </div>
                 
             </div>
             <div>
-                <button className="button btn-reserve btn-primary cursor">Reserve</button>
+                <button 
+                className="button btn-reserve btn-primary cursor" 
+                onClick={handleReserveClick}
+                disabled={checkInDate && checkOutDate && guests > 0 ? false : true}
+                >
+                    Reserve
+                </button>
             </div>
             <div className="price-distribution d-flex direction-column">
                 <div className="final-price d-flex align-center justify-space-between">
-                    <span className="span">Rs. {price} X 2 nigths</span>
-                    <span className="span">Rs. {price * 2}</span>
+                    <span className="span">Rs. {price} X {numberOfNights} nigths</span>
+                    <span className="span">Rs. {price * numberOfNights}</span>
                 </div>
                 <div className="final-price d-flex align-center justify-space-between">
                     <span className="span">Service Fee</span>
@@ -64,7 +77,7 @@ export const FinalPrice  = ({singleHotel}) => {
                 </div>
                 <div className="final-price d-flex align-center justify-space-between">
                     <span className="span">Total</span>
-                    <span className="span">Rs. {price * 2 + 200}</span>
+                    <span className="span">Rs. {price * numberOfNights + 200}</span>
                 </div>
             </div>
         </div>

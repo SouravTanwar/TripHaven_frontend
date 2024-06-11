@@ -1,5 +1,6 @@
 import "./Navbar.css"
 import { useDate, useAuth } from "../../Context"
+import { Link } from "react-router-dom"
 
 export const Navbar = () => {
 
@@ -23,9 +24,7 @@ export const Navbar = () => {
     return (
         <header className="heading d-flex align-center">
             <h1 className="heading-1">
-                <a className="link" href="/">
-                    TripHaven
-                </a>
+                <Link className="link" to="/">TripHaven</Link>
             </h1>
             <div className="form-container d-flex align-center cursor-pointer shadow" onClick={handleSearchClick}> 
                 <span className="form-option"> {destination || "Any Where"}</span>

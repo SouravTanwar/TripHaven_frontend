@@ -24,7 +24,7 @@ export const dateReducer = (state, {type, payload}) => {
         case "GUESTS": 
             return{
                 ...state,
-                guests: payload
+                guests: payload <0 ? 0 : payload
             }
         case "DATE_FOCUS":
             return{

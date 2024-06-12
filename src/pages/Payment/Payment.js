@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import "./Payment.css"
 import axios from "axios"
 import { useDate } from "../../Context"
@@ -15,7 +15,7 @@ export const Payment = () => {
 
     const numberOfNights = checkInDate && checkOutDate ? (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 3600 * 24): 0 
 
-    
+    const navigate = useNavigate()
 
 
     useEffect(()=>{
@@ -34,6 +34,10 @@ export const Payment = () => {
     const {image, name, address, state, rating, price} = singleHotel
 
     const totalPayableAmount = price * numberOfNights + 200
+
+    const HandleConfirmBookingClick = () => {
+        navigate("/")
+    }
 
     return (
         <Fragment>
@@ -62,7 +66,7 @@ export const Payment = () => {
                         <h3>pay with</h3>
                         <div>Razorpay</div>
                     </div>
-                    <button className="button btn-primary btn-reserve cursor btn-pay">
+                    <button className="button btn-primary btn-reserve cursor btn-pay" onClick={HandleConfirmBookingClick}>
                         confirm Booking
                     </button>
                 </div>

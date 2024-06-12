@@ -19,7 +19,7 @@ export const Ratings = () => {
             <div className="d-flex align-center gap-large">
                 {
                     ratings.map((rating) => (
-                        <span className="span-label aminity-count star d-flex align-center justify-center cursor-pointer on-hover" onClick={() => handleRatingsClick(rating) } key={rating} >{rating} &up</span>) )
+                        <span className={`span-label aminity-count star d-flex align-center justify-center cursor-pointer on-hover ${tripHavenRating.toString() === rating ? "selected" : ""  } `} onClick={() => handleRatingsClick(rating) } key={rating} >{rating} &up</span>) )
                 }
             </div>
         </div>

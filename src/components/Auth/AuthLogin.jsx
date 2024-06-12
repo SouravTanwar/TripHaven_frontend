@@ -1,12 +1,14 @@
 import "./Auth.css"
 import { validateNumber, validatePassword } from "../../Utils"
 import { useRef } from "react"
-import { useAuth } from "../../Context"
+import { useAlert, useAuth } from "../../Context"
 import { loginHandler } from "../../Services"
 
 export const AuthLogin = () => {
 
     const {authDispatch, number, password} = useAuth()
+
+    const { setAlert } = useAlert()
 
     const validationStates = useRef({
         isNumberValid: false,
@@ -50,30 +52,46 @@ export const AuthLogin = () => {
         const {isNumberValid, isPasswordlValid} = validationStates.current;
 
         if( isNumberValid && isPasswordlValid ){
-            const {accessToken, username} = await loginHandler(number, password)
-            authDispatch({
-                type: "SET_ACCESS_TOKEN",
-                payload: accessToken
-            })
-
-            authDispatch({
-                type: "SET_USER_NAME",
-                payload: username
+            try {
+                const {accessToken, username} = await loginHandler(number, password, setAlert)
+                authDispatch({
+                    type: "SET_ACCESS_TOKEN",
+                    payload: accessToken
+                })
+    
+                authDispatch({
+                    type: "SET_USER_NAME",
+                    payload: username
+                })
+                authDispatch({
+                    type: "CLEAR_USER_DATA"
+                })
+        
+                authDispatch({
+                    type: "SHOW_AUTH_MODAL",
+                })
+                
+            } catch (error) {
+                console.error("Error during login:", error);
+                setAlert({
+                    open: true,
+                    message: "Invalid Credentials!",
+                    type: "error"
+                })
+            }   
+        }else{
+            setAlert({
+                open: true,
+                message: "Invalid Credentials!",
+                type: "error"
             })
         }
-        authDispatch({
-            type: "CLEAR_USER_DATA"
-        })
-
-        authDispatch({
-            type: "SHOW_AUTH_MODAL",
-        })
 
     }
 
 
     const handleTestCredentialClick = async () => {
-        const { accessToken, username } = await loginHandler(8080808080, "Asdf@123")
+        const { accessToken, username } = await loginHandler(8080808080, "Asdf@123", setAlert)
         authDispatch({
             type: "SET_ACCESS_TOKEN",
             payload: accessToken

@@ -2,11 +2,11 @@ import "./Navbar.css"
 import { useDate, useAuth } from "../../Context"
 import { Link } from "react-router-dom"
 
-export const Navbar = () => {
+export const Navbar = ({route}) => {
 
     const {destination, dateDispatch, checkInDate, checkOutDate, guests} = useDate()
 
-    const { authDispatch } = useAuth()
+    const { authDispatch, accessToken, name } = useAuth()
 
     const handleSearchClick = () => {
         dateDispatch({
@@ -15,9 +15,15 @@ export const Navbar = () => {
     }
 
     const handleAuthClick = () => {
-        authDispatch({
-            type: "SHOW_AUTH_MODAL"
-        })
+        if(accessToken){
+            authDispatch({
+                type: "SHOW_DROP_DOWN_OPTIONS"
+            })
+        } else {
+            authDispatch({
+                type: "SHOW_AUTH_MODAL"
+            })
+        }
     }
 
 
@@ -26,24 +32,28 @@ export const Navbar = () => {
             <h1 className="heading-1">
                 <Link className="link" to="/">TripHaven</Link>
             </h1>
-            <div className="form-container d-flex align-center cursor-pointer shadow" onClick={handleSearchClick}> 
-                <span className="form-option"> {destination || "Any Where"}</span>
+            {
+                route !== "wishlist" && <div className="form-container d-flex align-center cursor-pointer shadow" onClick=  {handleSearchClick}> 
+                    <span className="form-option"> {destination || "Any Where"}</span>
 
-                <span className="border-right-1px"></span>
+                    <span className="border-right-1px"></span>
 
-                <span className="form-option"> 
-                    {checkInDate && checkOutDate ? `${checkInDate.toLocaleDateString("en-US", {day: "numeric", month: "short" })} - ${checkOutDate.toLocaleDateString("en-US", {day: "numeric", month: "short" })}` : "Any Week" }
-                </span>
+                    <span className="form-option"> 
+                        {checkInDate && checkOutDate ? `${checkInDate.toLocaleDateString("en-US", {day: "numeric", month:   "short" })} - ${checkOutDate.toLocaleDateString("en-US", {day: "numeric", month: "short" })}` : "Any  Week" }
+                    </span>
 
-                <span className="border-right-1px"></span>
+                    <span className="border-right-1px"></span>
 
-                <span className="form-option"> {guests > 0 ? `${guests} guests` : "Add Guests"}</span>
+                    <span className="form-option"> {guests > 0 ? `${guests} guests` : "Add Guests"}</span>
 
-                <span class="material-symbols-outlined search">search</span>
-            </div>
-
+                    <span class="material-symbols-outlined search">search</span>
+                </div>
+            }
             <nav className="d-flex align-center gap-large" onClick={handleAuthClick} >
 
+                
+                {name && <span className="name">Hi, {name}</span>}
+                
                 <div className="nav d-flex align-center cursor-pointer">
                     <span className="material-symbols-outlined profile-option menu"> 
                         menu

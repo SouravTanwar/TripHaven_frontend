@@ -62,3 +62,11 @@
     color: var(--text-color-primary);
     opacity: 0.7;
 }
+
+.destination-options{
+    border-radius: 4px;
+}
+
+.search-container{
+    border-radius: 4px;
+}

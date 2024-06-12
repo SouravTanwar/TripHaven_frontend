@@ -4,6 +4,7 @@ import { authReducer } from "../reducer"
 
 const initialValue = {
     isAuthModalOpen: false,
+    isDropDownModalOpen: false,
     username:"",
     number:"",
     email:"",
@@ -18,11 +19,11 @@ const AuthContext = createContext(initialValue)
 
 const AuthProvider = ({children}) => {
 
-    const [{isAuthModalOpen, username, number, email, password, confirmPassword, accessToken, name, selectedTab}, authDispatch] = useReducer(authReducer, initialValue)
+    const [{isAuthModalOpen, isDropDownModalOpen, username, number, email, password, confirmPassword, accessToken, name, selectedTab}, authDispatch] = useReducer(authReducer, initialValue)
 
 
     return (
-        <AuthContext.Provider value= {{isAuthModalOpen, username, number, email, password, confirmPassword, accessToken, name, selectedTab, authDispatch}} >
+        <AuthContext.Provider value= {{isAuthModalOpen, isDropDownModalOpen, username, number, email, password, confirmPassword, accessToken, name, selectedTab, authDispatch}} >
             {children}
         </AuthContext.Provider>
     )

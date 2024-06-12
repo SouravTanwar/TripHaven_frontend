@@ -69,6 +69,13 @@ export const SearchStaywithDate = () => {
         navigate(`/hotels/${destination}`)
     }
 
+    const HandleSearchContainerClick = () => {
+        
+        dateDispatch({
+            type : "CLOSE_SEARCH_MODAL"
+        })
+    }
+
 
 
     const destinationOptions = hotels.filter(
@@ -86,7 +93,7 @@ export const SearchStaywithDate = () => {
 
 
     return (
-        <div className="destination-container" >
+        <div className="destination-container" onDoubleClick={HandleSearchContainerClick} >
             <div className="destination-options d-flex align-center absolute">
                 <div className="location-container">
                     <label className="label">Where</label>

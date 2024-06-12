@@ -1,5 +1,5 @@
 import "./FinalPrice.css"
-import {useDate} from "../../Context"
+import {useAlert, useAuth, useDate} from "../../Context"
 import { DateSelector } from "../DateSelector/DateSelector";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,10 @@ export const FinalPrice  = ({singleHotel}) => {
     const navigate = useNavigate()
 
     const {guests, checkInDate, checkOutDate, dateDispatch} = useDate()
+
+    const {setAlert} = useAlert()
+
+    const {accessToken, authDispatch} = useAuth()
 
     const numberOfNights = checkInDate && checkOutDate ? (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 3600 * 24): 0 
 
@@ -24,7 +28,34 @@ export const FinalPrice  = ({singleHotel}) => {
     }
 
     const handleReserveClick = () => {
-        navigate(`/confirm-booking/stay/${_id}`)
+        if (!checkInDate) {
+
+            setAlert({
+                open: true,
+                message: "Select a Check-in Date",
+                type: "info"
+            })
+        } else if (!checkOutDate) {
+            
+            setAlert({
+                open: true,
+                message: "Select a Check-out Date",
+                type: "info"
+            })
+        } else if (guests < 1) {
+            
+            setAlert({
+                open: true,
+                message: "Add number of guests",
+                type: "info"
+            })
+        } else if (accessToken) {
+            navigate(`/confirm-booking/stay/${_id}`);
+        } else {
+            authDispatch({
+                type: "SHOW_AUTH_MODAL"
+            })
+        }
     }
 
     return (
@@ -61,7 +92,6 @@ export const FinalPrice  = ({singleHotel}) => {
                 <button 
                 className="button btn-reserve btn-primary cursor" 
                 onClick={handleReserveClick}
-                disabled={checkInDate && checkOutDate && guests > 0 ? false : true}
                 >
                     Reserve
                 </button>

@@ -1,14 +1,19 @@
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { FinalPrice, HotelDetails, HotelImages, Navbar } from "../../components";
+import { Alert, AuthModal, FinalPrice, HotelDetails, HotelImages, Navbar, ProfileDropDown, SearchStaywithDate } from "../../components";
 import "./SingleHotel.css"
+import { useAlert, useAuth, useDate } from "../../Context";
 
 
 export const SingleHotel = () => {
 
     const {id} = useParams();
     const [singleHotel, setSingleHotel] = useState({});
+
+    const { isAuthModalOpen, isDropDownModalOpen } = useAuth();
+    const { isSearchModalOpen } = useDate();
+    const { alert } = useAlert();
 
 
     useEffect(()=>{
@@ -22,25 +27,29 @@ export const SingleHotel = () => {
             }
         })()
 
-    },[])
+    })
 
     const {name, state} = singleHotel
 
     return (
     
-        <Fragment>
-            <Navbar />
-            <main className="single-hotel-page">
-                <p className="hotel-name-add">
-                    {name}, {state}
-                </p>
-                <HotelImages singleHotel={singleHotel} />
-                <div className="d-flex">
-                    <HotelDetails singleHotel={singleHotel} />
-                    <FinalPrice singleHotel={singleHotel}/>
-                </div>
-            </main>
-        </Fragment>
+    <div className="relative">
+        <Navbar />
+        <main className="single-hotel-page">
+        <p className="hotel-name-add">
+            {name}, {state}
+        </p>
+        <HotelImages singleHotel={singleHotel} />
+        <div className="d-flex">
+            <HotelDetails singleHotel={singleHotel} />
+            <FinalPrice singleHotel={singleHotel} />
+        </div>
+        </main>
+        {isSearchModalOpen && <SearchStaywithDate />}
+        {isDropDownModalOpen && <ProfileDropDown />}
+        {isAuthModalOpen && <AuthModal />}
+        {alert.open && <Alert />}
+    </div>
 
     )
 }

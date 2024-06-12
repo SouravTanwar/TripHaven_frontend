@@ -29,7 +29,7 @@ export const Payment = () => {
             }
         })()
 
-    })
+    },[id])
 
     const {image, name, address, state, rating, price} = singleHotel
 

@@ -1,5 +1,5 @@
-import { useRef } from "react"
-import { useAuth } from "../../Context"
+import { useRef, useState } from "react"
+import { useAuth, useAlert } from "../../Context"
 import { signupHandler } from "../../Services"
 import { validateEmail, validateName, validateNumber, validatePassword } from "../../Utils"
 import "./Auth.css"
@@ -8,6 +8,8 @@ export const AuthSignup = () => {
 
     const { username, email, password, confirmPassword, number, authDispatch } = useAuth()
 
+    const { setAlert } = useAlert()
+
     const validationStates = useRef({
         isNumberValid: false,
         isNameValid: false,
@@ -15,6 +17,8 @@ export const AuthSignup = () => {
         isPasswordlValid: false,
         isConfirmPasswordlValid: false,
     })
+
+    const [newPassword, setNewPassword] = useState("")
 
     
     const handleNumberChange = (event) => {
@@ -67,6 +71,7 @@ export const AuthSignup = () => {
 
         if(validationStates.current.isPasswordlValid){
             console.log("valid input")
+            setNewPassword(event.target.value)
             authDispatch({
                 type: "PASSWORD",
                 payload: event.target.value
@@ -78,7 +83,7 @@ export const AuthSignup = () => {
     }
 
     const handleConfirmPasswordChange = (event) => {
-        validationStates.current.isConfirmPasswordlValid = validatePassword(event.target.value)
+        validationStates.current.isConfirmPasswordlValid = newPassword === event.target.value ? true : false
 
         if(validationStates.current.isConfirmPasswordlValid){
             console.log("valid input")
@@ -92,7 +97,7 @@ export const AuthSignup = () => {
         } 
     }
 
-    const HandleFormSubmit = (event) => {
+    const HandleFormSubmit = async (event) => {
 
         event.preventDefault()
 
@@ -104,18 +109,49 @@ export const AuthSignup = () => {
             isConfirmPasswordlValid,
         } = validationStates.current;
         
+        if(!isNumberValid){
+            setAlert({
+                open: true,
+                message: "Enter a Valid 10 digit no",
+                type: "info"
+            })
+        }else if(!isNameValid){
+            setAlert({
+                open: true,
+                message: "Please Enter a valid name",
+                type: "info"
+            })
+        }else if(!isEmailValid){
+            setAlert({
+                open: true,
+                message: "Please Enter a valid email",
+                type: "info"
+            })
+        }else if(!isPasswordlValid){
+            setAlert({
+                open: true,
+                message: "Please Enter a Password with atleast 8 char, upperCase, lowerCase, Digit, SpecialChar",
+                type: "info"
+            })
+        }else if(!isConfirmPasswordlValid){
+            setAlert({
+                open: true,
+                message: "Confirm password should be same as password",
+                type: "info"
+            })
+        }else{
+            
+            if(await signupHandler(username, number, email, password, setAlert)){
 
-        if(isNumberValid &&
-            isNameValid &&
-            isEmailValid &&
-            isPasswordlValid &&
-            isConfirmPasswordlValid) 
-            {
-            signupHandler(username, number, email, password)
+                authDispatch({
+                    type: "CLEAR_USER_DATA"
+                })
+                authDispatch({
+                    type: "SET_TO_LOGIN"
+                })
+            }
         }
-        authDispatch({
-            type: "CLEAR_USER_DATA"
-        })
+        
     }
 
 

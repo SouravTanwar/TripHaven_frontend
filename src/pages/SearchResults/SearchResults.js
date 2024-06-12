@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react"
-import { HotelCard, Navbar } from "../../components"
-import { useDate, useCategory } from "../../Context"
+import { Alert, AuthModal, HotelCard, Navbar, ProfileDropDown, SearchStaywithDate } from "../../components"
+import { useDate, useCategory, useAlert, useAuth } from "../../Context"
 import axios from "axios"
 
 
@@ -10,8 +10,12 @@ export const SearchResults = () => {
 
     const {destination} = useDate();
     const {hotelCategory} = useCategory()
+    const {alert} = useAlert()
 
     const [hotels, setHotels] = useState([])
+
+    const { isAuthModalOpen, isDropDownModalOpen } = useAuth();
+    const { isSearchModalOpen } = useDate();
 
     useEffect(()=>{
         (async () => {
@@ -22,7 +26,7 @@ export const SearchResults = () => {
                 console.log(error);
             }
         })()
-    },[destination])
+    },[destination, hotelCategory])
 
     const filteredSearchResults = hotels.filter(({city, address, state}) => 
         address.toLowerCase() === destination.toLowerCase() || 
@@ -41,6 +45,10 @@ export const SearchResults = () => {
                             <HotelCard key={hotel._id} hotel={hotel} /> )) : (<h3>Noting Found</h3> )
                     }
                 </section>
+                {isSearchModalOpen && <SearchStaywithDate />}
+                {isDropDownModalOpen && <ProfileDropDown />}
+                {isAuthModalOpen && <AuthModal />}
+                {alert.open && <Alert />}
             </Fragment>
         )
 }

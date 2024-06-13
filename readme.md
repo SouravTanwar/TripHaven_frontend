@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Link to view product
+Click Here[https://fancy-piroshki-e06ccd.netlify.app/]
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -91,7 +91,7 @@ export const AuthLogin = () => {
 
 
     const handleTestCredentialClick = async () => {
-        const { accessToken, username } = await loginHandler(9999999999, "Asdf@123", setAlert)
+        const {accessToken, username } = await loginHandler(9999999999, "Asdf@123", setAlert)
         authDispatch({
             type: "SET_ACCESS_TOKEN",
             payload: accessToken

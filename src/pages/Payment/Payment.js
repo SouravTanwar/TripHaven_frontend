@@ -67,7 +67,7 @@ export const Payment = () => {
                         <div>Razorpay</div>
                     </div>
                     <button className="button btn-primary btn-reserve cursor btn-pay" onClick={HandleConfirmBookingClick}>
-                        confirm Booking
+                        Confirm Booking
                     </button>
                 </div>
                 <div className="final-details d-flex direction-column gap-large">

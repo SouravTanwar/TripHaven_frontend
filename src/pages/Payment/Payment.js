@@ -87,7 +87,7 @@ export const Payment = () => {
                         </div>
                     </div>
                     <div className="tag">
-                        Your booking is protected by <strong className="strong">TripHaven</strong> cover
+                        Your booking is well protected by <strong className="strong">TripHaven</strong> cover
                     </div>
                     <div className="price-detail-container">
                         <div className="price-distribution d-flex direction-column">
